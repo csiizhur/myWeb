@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <!-- 引入样式 -->
+    <!--<link href="https://cdn.bootcss.com/element-ui/2.8.2/theme-chalk/index.css" rel="stylesheet">-->
+    <link th:href="@{/css/element-ui.css}" rel="stylesheet">
+    <style>
+        body {
+            margin: 0 0 0 0;
+        }
+
+        .el-header {
+            padding: 0 0px;
+        }
+    </style>
+    <title>测试Title</title>
+</head>
+<body>
+<el-container id="app">
+    <!-- <div v-for="u in userList">
+         {{u.name}} -&#45;&#45;&#45;&#45; {{u.code}}
+     </div>-->
+    <el-header>
+        <module></module>
+    </el-header>
+
+    <el-container>
+        <el-aside>
+            <side-muse v-bind:museum="museum"></side-muse>
+            <!--<button-counter name="name"></button-counter>-->
+        </el-aside>
+        <el-main>
+            <p>
+                <!-- 使用 router-link 组件来导航. -->
+                <!-- 通过传入 `to` 属性指定链接. -->
+                <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+                <router-link to="/foo">Go to Foo</router-link>
+                <router-link to="/bar">Go to Bar</router-link>
+            </p>
+            <router-view></router-view>
+            <el-table style="width: 100%">
+                <el-table-column prop="date" label="日期" width="180"></el-table-column>
+                <el-table-column prop="name" label="姓名" width="180"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
+            </el-table>
+        </el-main>
+    </el-container>
+</el-container>
+</body>
+<!-- import Vue before Element -->
+<script th:src="@{/plugin/vue.js}"></script>
+<script th:src="@{/plugin/vue-router.js}"></script>
+<script th:src="@{/plugin/element-ui.js}"></script>
+<script th:src="@{/plugin/axios.min.js}"></script>
+<script th:src="@{/js/museum.js}"></script>
+<script th:src="@{/js/index.js}"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const webctx = /*[[@{/}]]*/'';
+    /*]]>*/
+</script>
+</html>

@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.1.243:3306/sgw_test?serverTimezone=UTC&useUnicode=true&autoReconnect=true&useSSL=false&characterEncoding=UTF-8
+    username: root
+    password: 123456
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+server:
+  port: 5000
