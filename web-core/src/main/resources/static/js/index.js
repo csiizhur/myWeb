@@ -10,11 +10,10 @@ Vue.component('module', function (resolve, reject) {
         })
         .catch(error => console.log(error))
 });
-/*Vue.component('museum', function (resolve, reject) {
+Vue.component('passage', function (resolve, reject) {
     // 向 `resolve` 回调传递组件定义
-    axios.get(webctx + 'museum/page')
+    axios.get(webctx + 'user/passage')
         .then(response => {
-            console.log(response);
             resolve({
                 template: response.data,
                 data() {
@@ -23,7 +22,7 @@ Vue.component('module', function (resolve, reject) {
             })
         })
         .catch(error => console.log(error))
-});*/
+});
 // 定义一个名为 button-counter 的新组件
 Vue.component('button-counter', {
     data: function () {
@@ -40,8 +39,9 @@ window.onload = function (ev) {
 
 // 1. 定义 (路由) 组件。
 // 可以从其他文件 import 进来
-    const Foo = {template: '<div>foo</div>'}
-    const Bar = {template: '<div>bar</div>'}
+    const Foo = {template: '<module></module>'};
+
+    const Bar = {template: '<div>bar</div>'};
 
 // 2. 定义路由
 // 每个路由应该映射一个组件。 其中"component" 可以是
@@ -49,8 +49,27 @@ window.onload = function (ev) {
 // 或者，只是一个组件配置对象。
 // 我们晚点再讨论嵌套路由。
     const routes = [
-        {path: '/foo', component: Foo},
-        {path: '/bar', component: Bar}
+        {path: '/foo/:id', name: "foo", component: Foo},
+        {
+            path: '/bar', component: function () {
+                return {
+                    component: new Promise(resolve => {
+                        axios.get(webctx + 'user/passage')
+                            .then(response => {
+                                resolve({
+                                    template: response.data,
+                                    data() {
+                                        return {
+                                            tempStr: response.data
+                                        };
+                                    }
+                                })
+                            })
+                            .catch(error => console.log(error))
+                    })
+                }
+            }
+        }
     ];
 
 // 3. 创建 router 实例，然后传 `routes` 配置

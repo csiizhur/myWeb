@@ -27,12 +27,17 @@ Vue.component('side-muse', {
             },
             methods: {
                 goTo(path) {
-                    console.log(this.$router)
-                    let router = this.$router.currentRoute
-                    if (router.path === '/foo') {
-                        this.$router.push('bar')
+                    console.log(this.$router);
+                    let router = this.$router.currentRoute;
+                    if (router.path !== '/bar') {
+                        this.$router.push('/bar?_='+(new Date()).getTime())
                     } else {
-                        this.$router.push('foo')
+                        this.$router.push({
+                            name: "foo",
+                            params: {
+                                "_": (new Date()).getTime()
+                            }
+                        })
                     }
                 }
             },
@@ -62,5 +67,5 @@ Vue.component('side-muse', {
         `
         }
     }
-})
+});
 
