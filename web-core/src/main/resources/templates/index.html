@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/XSL/Transform">
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/XSL/Transform"
+      xmlns:v-slot="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" ">
 <head>
     <meta charset="UTF-8">
     <!-- import CSS -->
     <!-- 引入样式 -->
     <!--<link href="https://cdn.bootcss.com/element-ui/2.8.2/theme-chalk/index.css" rel="stylesheet">-->
-    <link th:href="@{/css/element-ui.css}" rel="stylesheet">
-    <style>
-        body {
-            margin: 0 0 0 0;
-        }
-
-        .el-header {
-            padding: 0 0px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <title>测试Title</title>
 </head>
 <body>
@@ -32,19 +25,73 @@
             <!--<button-counter name="name"></button-counter>-->
         </el-aside>
         <el-main>
-            <p>
-                <!-- 使用 router-link 组件来导航. -->
-                <!-- 通过传入 `to` 属性指定链接. -->
-                <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
-                <router-link to="/foo">Go to Foo</router-link>
-                <router-link to="/bar">Go to Bar</router-link>
-            </p>
-            <router-view :key="$route.path"></router-view>
-            <el-table style="width: 100%">
-                <el-table-column prop="date" label="日期" width="180"></el-table-column>
-                <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-                <el-table-column prop="address" label="地址"></el-table-column>
-            </el-table>
+            <el-card shadow="hover">
+                <el-row justify="end" type="flex">
+                    <el-col :span="18">
+                        <el-page-header>
+                            <template v-slot:content>
+                                <span><i class="el-icon-menu"></i> 菜单管理</span>
+                            </template>
+                        </el-page-header>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-breadcrumb separator="/">
+                            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                            <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+                            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+                            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+                        </el-breadcrumb>
+                    </el-col>
+                </el-row>
+            </el-card>
+            <el-row type="flex">
+                <el-col :span="24">
+                    <el-card class="search-card" shadow="hover">
+                        <template v-slot:header>
+                            <span>查询</span>
+                        </template>
+                        <el-form :inline="true" label-width="80px">
+                            <el-form-item label="名称">
+                                <el-input></el-input>
+                            </el-form-item>
+                            <el-form-item label="活动区域">
+                                <el-input></el-input>
+                            </el-form-item>
+                            <el-form-item label="活动形式">
+                                <el-input></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary">查询</el-button>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button>重置</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </el-card>
+                </el-col>
+            </el-row>
+            <el-card class="search-card" shadow="hover">
+                <el-table :data="tableData" stripe="true" border="true" height="500">
+                    <el-table-column prop="name" label="名称"></el-table-column>
+                    <el-table-column prop="type" label="类型"></el-table-column>
+                    <el-table-column prop="orderIndex" label="序号"></el-table-column>
+                    <el-table-column prop="parent" label="父级"></el-table-column>
+                    <el-table-column prop="rootNode" label="是否是根目录"></el-table-column>
+                    <el-table-column prop="icon" label="图标"></el-table-column>
+                    <el-table-column prop="title" label="标题"></el-table-column>
+                    <el-table-column prop="groupTitle" label="分组标题"></el-table-column>
+                    <el-table-column prop="groupIcon" label="分组图标"></el-table-column>
+                </el-table>
+                <el-row type="flex" justify="end">
+                    <el-col :span="8" >
+                        <el-pagination
+                                background
+                                layout="prev, pager, next"
+                                :total="1000">
+                        </el-pagination>
+                    </el-col>
+                </el-row>
+            </el-card>
         </el-main>
     </el-container>
 </el-container>
@@ -52,7 +99,7 @@
 <!-- import Vue before Element -->
 <script th:src="@{/plugin/vue.js}"></script>
 <script th:src="@{/plugin/vue-router.js}"></script>
-<script th:src="@{/plugin/element-ui.js}"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script th:src="@{/plugin/axios.min.js}"></script>
 <script th:src="@{/js/museum.js}"></script>
 <script th:src="@{/js/index.js}"></script>

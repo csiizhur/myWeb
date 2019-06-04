@@ -23,6 +23,10 @@ public class MuseumController extends BaseController {
         this.museumService = museumService;
     }
 
+    @GetMapping("findAll")
+    public List<Museum> findAll() {
+        return museumService.findAll();
+    }
 
     @GetMapping("page")
     public ModelAndView page() {

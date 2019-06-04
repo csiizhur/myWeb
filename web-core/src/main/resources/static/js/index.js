@@ -85,7 +85,8 @@ window.onload = function (ev) {
             return {
                 userList: null,
                 museum: null,
-                name: '测试用的名称.......'
+                name: '测试用的名称.......',
+                tableData: null
             }
         },
         mounted() {
@@ -98,6 +99,10 @@ window.onload = function (ev) {
                     this.museum = response.data;
                     console.log(response.data)
                 }).catch(error => console.log(error))
+            axios.get(webctx + 'museum/findAll')
+                .then(response => {
+                    this.tableData = response.data
+                })
         }
     })
 };

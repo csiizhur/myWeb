@@ -29,6 +29,12 @@ public class MuseumServiceImpl extends BaseServiceImpl<Museum, String> implement
         return museumRepository;
     }
 
+    @Override
+    public List<Museum> findAll() {
+        List<Museum> museums = super.findAll();
+        museums.forEach(museum -> museum.setChildren(null));
+        return museums;
+    }
 
     @Override
     public List<Museum> eachMuseum() {
