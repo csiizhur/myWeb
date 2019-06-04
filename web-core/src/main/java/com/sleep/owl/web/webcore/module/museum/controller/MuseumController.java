@@ -5,7 +5,11 @@ import com.sleep.owl.web.webcore.module.museum.model.Museum;
 import com.sleep.owl.web.webcore.module.museum.model.enums.Type;
 import com.sleep.owl.web.webcore.module.museum.service.MuseumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,6 +38,12 @@ public class MuseumController extends BaseController {
         view.setViewName(MUSEUM_PAGE);
 
         return view;
+    }
+
+    @GetMapping("findAll/{page}")
+    public Page<Museum> findAll(int pageSize, @PathVariable("page") int page) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return museumService.findAll(pageable);
     }
 
     @GetMapping("findRoot")

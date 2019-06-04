@@ -6,6 +6,8 @@ import com.sleep.owl.web.webcore.module.museum.model.Museum;
 import com.sleep.owl.web.webcore.module.museum.repository.MuseumRepository;
 import com.sleep.owl.web.webcore.module.museum.service.MuseumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +36,16 @@ public class MuseumServiceImpl extends BaseServiceImpl<Museum, String> implement
         List<Museum> museums = super.findAll();
         museums.forEach(museum -> museum.setChildren(null));
         return museums;
+    }
+
+    @Override
+    public Page<Museum> findAll(Pageable pageable) {
+        Page<Museum> page = super.findAll(pageable);
+        page.getContent().forEach(museum ->{
+            museum.setChildren(null);
+            museum.setParent(null);
+        });
+        return page;
     }
 
     @Override

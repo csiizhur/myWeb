@@ -86,7 +86,34 @@ window.onload = function (ev) {
                 userList: null,
                 museum: null,
                 name: '测试用的名称.......',
-                tableData: null
+                tableData: null,
+                page: {
+                    total: 0,
+                    pageCount: 0,
+                    currentPage: 1,
+                    pageSize: 10
+                }
+            }
+        },
+        methods: {
+            requestPage: function (currentPage) {
+                let self = this;
+                let page = self.page;
+                axios.get(webctx + 'museum/findAll/' + currentPage, {
+                    params: {
+                        pageSize: page.pageSize
+                    }, responseType: 'json'
+                })
+                    .then(response => {
+                        let data = response.data;
+                        self.tableData = data.content;
+                        self.page.total = data.totalElements;
+                        self.page.pageCount = data.totalPages;
+                        self.page.currentPage = data.number+1;
+                    })
+            },
+            currentChange(page) {
+                this.requestPage(page-1);
             }
         },
         mounted() {
@@ -97,12 +124,8 @@ window.onload = function (ev) {
             axios.get(webctx + 'museum/findRoot')
                 .then(response => {
                     this.museum = response.data;
-                    console.log(response.data)
                 }).catch(error => console.log(error))
-            axios.get(webctx + 'museum/findAll')
-                .then(response => {
-                    this.tableData = response.data
-                })
+            this.requestPage(0)
         }
     })
 };

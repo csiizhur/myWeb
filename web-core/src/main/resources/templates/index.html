@@ -70,24 +70,63 @@
                     </el-card>
                 </el-col>
             </el-row>
+
             <el-card class="search-card" shadow="hover">
-                <el-table :data="tableData" stripe="true" border="true" height="500">
+                <el-row type="flex">
+                    <el-col :span="2">
+                        <el-button type="primary">主要按钮</el-button>
+                    </el-col>
+                    <el-col :span="2">
+                        <el-button type="success">成功按钮</el-button>
+                    </el-col>
+                    <el-col :span="2">
+
+                        <el-button type="info">信息按钮</el-button>
+                    </el-col>
+                    <el-col :span="2">
+                        <el-button type="warning">警告按钮</el-button>
+                    </el-col>
+                    <el-col :span="2">
+                        <el-button type="danger">危险按钮</el-button>
+                    </el-col>
+                </el-row>
+                <el-table :data="tableData" stripe border>
+                    <el-table-column type="selection" width="55"></el-table-column>
+                    <el-table-column type="index" width="55"></el-table-column>
                     <el-table-column prop="name" label="名称"></el-table-column>
-                    <el-table-column prop="type" label="类型"></el-table-column>
+                    <el-table-column prop="type" label="类型">
+                        <template slot-scope="scope">
+                            <template v-if="scope.row.type==='MUSEUM'">
+                                <i class="el-icon-menu"></i>
+                                <span>菜单</span>
+                            </template>
+                            <template v-else>
+                                <i class="el-icon-s-data"></i>
+                                <span>模块</span>
+                            </template>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="orderIndex" label="序号"></el-table-column>
                     <el-table-column prop="parent" label="父级"></el-table-column>
                     <el-table-column prop="rootNode" label="是否是根目录"></el-table-column>
-                    <el-table-column prop="icon" label="图标"></el-table-column>
+                    <el-table-column prop="icon" width="55" label="图标">
+                        <template slot-scope="scope">
+                            <i :class="scope.row.icon"></i>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="title" label="标题"></el-table-column>
                     <el-table-column prop="groupTitle" label="分组标题"></el-table-column>
                     <el-table-column prop="groupIcon" label="分组图标"></el-table-column>
                 </el-table>
                 <el-row type="flex" justify="end">
-                    <el-col :span="8" >
+                    <el-col :span="8">
                         <el-pagination
                                 background
                                 layout="prev, pager, next"
-                                :total="1000">
+                                @current-change="currentChange"
+                                :total="page.total"
+                                :current-page="page.currentPage"
+                                :page-size="page.pageSize">
                         </el-pagination>
                     </el-col>
                 </el-row>
